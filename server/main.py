@@ -1,4 +1,3 @@
-import os
 import uvicorn
 
 from fastapi import FastAPI, File, HTTPException, Depends, Body, UploadFile, Response, status
