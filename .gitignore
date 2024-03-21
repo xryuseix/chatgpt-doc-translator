@@ -160,3 +160,5 @@ cython_debug/
 #.idea/
 temp_files/
 download-file/
+.env
+translated_file/

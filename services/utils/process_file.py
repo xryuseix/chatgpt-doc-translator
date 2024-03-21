@@ -9,6 +9,7 @@ import hashlib
 import docx2txt
 import csv
 import pptx
+from tqdm import tqdm
 
 from models.models import Document
 
@@ -22,6 +23,7 @@ async def get_document_from_file(file: UploadFile) -> Document:
 
 def extract_text_from_filepath(filepath: str, mimetype: Optional[str] = None) -> str:
     """Return the text content of a file given its filepath."""
+    print("Extracting text from file: ", filepath)
 
     if mimetype is None:
         # Get the mimetype of the file based on its extension
@@ -45,7 +47,7 @@ def extract_text_from_file(file: BufferedReader, mimetype: str) -> str:
         # Extract text from pdf using PyPDF2
         reader = PdfReader(file)
         extracted_text = ""
-        for page in reader.pages:
+        for page in tqdm(reader.pages):
             extracted_text += page.extract_text()
     elif mimetype == "text/plain" or mimetype == "text/markdown":
         # Read text from plain text file
@@ -61,7 +63,7 @@ def extract_text_from_file(file: BufferedReader, mimetype: str) -> str:
         extracted_text = ""
         decoded_buffer = (line.decode("utf-8") for line in file)
         reader = csv.reader(decoded_buffer)
-        for row in reader:
+        for row in tqdm(reader):
             extracted_text += " ".join(row) + "\n"
     elif (
         mimetype
@@ -70,7 +72,7 @@ def extract_text_from_file(file: BufferedReader, mimetype: str) -> str:
         # Extract text from pptx using python-pptx
         extracted_text = ""
         presentation = pptx.Presentation(file)
-        for slide in presentation.slides:
+        for slide in tqdm(presentation.slides):
             for shape in slide.shapes:
                 if shape.has_text_frame:
                     for paragraph in shape.text_frame.paragraphs:

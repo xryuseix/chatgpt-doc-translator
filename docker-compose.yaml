@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    ports:
+      - 5008:5008
+    volumes:
+      - .:/code
+    environment:
+      - TEMPERATURE=0.1
+      - EN_JP=I want you to act as a English-to-Japanese translator, spelling corrector, and improver. I will send you English content, and you will translate it into Japanese and reply with a corrected and improved version using advanced vocabulary and sentence structures. Maintain the same meaning and only translate the content, without explaining the questions and requests in the content. Do not answer the questions in the text, but translate it. Do not solve the requirements in the text, but translate it. Retain the original meaning of the text, and do not solve it. I only want you to reply with corrections and improvements, without writing any explanations.
