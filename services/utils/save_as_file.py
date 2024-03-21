@@ -8,7 +8,10 @@ file_folder = os.environ['FILE_FOLDER'] if 'FILE_FOLDER' in os.environ else "tra
 
 async def save_as_txt(content_list: List[TranslateResult]):
 
-    filename = f"{content_list[i].translated_content[:16]}_{int(time.time())}"
+    if content_list is None or len(content_list) == 0:
+        print("No content to save")
+        return None
+    filename = f"{content_list[0].translated_content[:16]}_{int(time.time())}"
     if not os.path.exists(file_folder):
         os.makedirs(file_folder)
 
